@@ -1,13 +1,23 @@
 ---
 title: "Lab 04 - La Quinta is Spanish for next to Denny's, Pt. 1"
-author: "Insert your name here"
-date: "Insert date here"
+author: "Rowan Kemmerly"
+date: "2.7.23"
 output: github_document
 ---
 
 ### Load packages and data
 
+```{r}
+# install.packages("devtools")
+devtools::install_github("rstudio-education/dsbox")
+```
+
+
+
 ```{r load-packages, message = FALSE}
+
+
+
 library(tidyverse) 
 library(dsbox) 
 ```
