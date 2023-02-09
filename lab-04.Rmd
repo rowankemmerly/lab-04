@@ -12,12 +12,7 @@ output: github_document
 devtools::install_github("rstudio-education/dsbox")
 ```
 
-
-
 ```{r load-packages, message = FALSE}
-
-
-
 library(tidyverse) 
 library(dsbox) 
 ```
@@ -28,34 +23,79 @@ states <- read_csv("data/states.csv")
 
 ### Exercise 1
 
-Remove this text, and add your answer for Exercise 1 here.
-Add code chunks as needed.
-Don't forget to label your code chunk.
-Do not use spaces in code chunk labels.
+```{r dataset-info}
+glimpse(dennys)
+```
+
+The Denny's dataset has 1643 rows and 6 columns: each row represents a Denny's location, and each column represents the 6 variables of location street address, city, state, zip code, longitude, and latitude. 
 
 ### Exercise 2
 
-Remove this text, and add your answer for Exercise 2 here.
-Add code chunks as needed.
-Don't forget to label your code chunk.
-Do not use spaces in code chunk labels.
+```{r dataset-info}
+glimpse(laquinta)
+```
+
+The La Quinta dataset has 909 rows and 6 columns: each row represents a La Quinta location, and each column represents the 6 variables of location street address, city, state, zip code, longitude, and latitude. 
+
 
 ### Exercise 3
 
-...
+There are 17 La Quinta locations outside of the United States in Canada, Mexico, China, New Zealand, Turkey, United Arab Emirates, Chile, and Colombia. There are no Denny's locations outside of the US. 
 
 ### Exercise 4
 
-...
+```{r view-data}
+view(laquinta)
+view(dennys)
+```
+
+To find out whether La Quinta or Denny's have locations outside of the US using the dataset, you could filter for states that are not one of the abbreviations of 50 (51) US states. That could probably be done using the help of our "states" dataset!
 
 ### Exercise 5
 
-...
+Seeing whether there are Denny's locations outside of the US with code:
+
+```{r dennys-filter}
+dennys %>%
+  filter(!(state %in% states$abbreviation))
+```
+
+Confirmed that there are no Denny's locations outside of the US!
 
 ### Exercise 6
 
-...
+Adding a "country" variable to the Denny's dataset:
 
+```{r dennys-country}
+dennys %>%
+  mutate(country = "United States")
+```
+
+### Exercise 7
  
-Add exercise headings as needed.
+Seeing whether there are La Quinta locations outside of the US with code:
+
+```{r la-quinta-filter}
+laquinta %>%
+  filter(!(state %in% states$abbreviation))
+```
+
+So it looks like this dataset only contains 14 of La Quinta's international locations. The ones in this dataset are located in Mexico (10 locations, 1 of which is now permanently closed, and 3 of which are now CHN hotels instead), Colombia, Honduras, and Canada (2 locations):
+
+Carretera Panamericana Sur KM 12 (Mexico)
+Av. Tulum Mza. 14 S.M. 4 Lote 2	(Mexico, permanently closed)
+Ejercito Nacional 8211 (Mexico)
+Blvd. Aeropuerto 4001	(Mexico)
+Carrera 38 # 26-13 Avenida las Palmas con Loma de San Julian El Poblado	(Colombia)
+AV. PINO SUAREZ No. 1001 (Mexico)
+Av. Fidel Velazquez #3000 Col. Central (Mexico)
+63 King Street East	(Canada)
+Calle Las Torres-1 Colonia Reforma (Mexico)
+Blvd. Audi N. 3 Ciudad Modelo (Mexico)
+Ave. Zeta del Cochero No 407 (Mexico)
+Av. Benito Juarez 1230 B (Carretera 57) Col. Valle Dorado Zona Hotelera	(Mexico)
+Blvd. Fuerza Armadas (Honduras)
+8640 Alexandra Rd (Canada)
+
+The locations not in this dataset are in 1) Queenstown, New Zealand, 2) Bodrum, Turkey, 3) Giresun, Turkey, 4) Istanbul, Turkey, 5) 
 
