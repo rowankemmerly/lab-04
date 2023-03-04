@@ -97,5 +97,47 @@ Av. Benito Juarez 1230 B (Carretera 57) Col. Valle Dorado Zona Hotelera	(Mexico)
 Blvd. Fuerza Armadas (Honduras)
 8640 Alexandra Rd (Canada)
 
-The locations not in this dataset are in 1) Queenstown, New Zealand, 2) Bodrum, Turkey, 3) Giresun, Turkey, 4) Istanbul, Turkey, 5) 
+### Exercise 8
+
+Now I'm adding a "country" variable based on state abbreviations for each case.
+
+```{r adding-country-variable}
+laquinta <- laquinta %>%
+  mutate(country = case_when(
+    state %in% state.abb     ~ "United States",
+    state %in% c("ON", "BC") ~ "Canada",
+    state == "ANT"           ~ "Colombia",
+    state == "FM"            ~ "Honduras",
+    state %in% c("AG","QR", "CH", "NL", "VE","PU","SL") ~ "Mexico"
+  ))
+```
+
+Now I'm filtering the La Quinta dataset for just locations that are in the US.
+
+```{r la-quinta-just-US}
+laquinta <- laquinta %>%
+  filter(country == "United States")
+```
+
+### Exercise 9
+
+Let's now look at how many Denny's and La Quintas are in each state!
+
+```{r dn-frequencies}
+dennys %>%
+  count(state) %>%
+  inner_join(states, by = c("state" = "abbreviation")) %>%
+  arrange(desc(n))
+
+```
+
+```{r lq-frequencies}
+
+laquinta %>%
+  count(state) %>%
+  inner_join(states, by = c("state" = "abbreviation")) %>%
+  arrange(name)
+```
+
+So it looks like California has the most Denny's locations (makes sense, since it's such a large state), and Delaware has the least (which also makes sense, since it's such a small state). For La Quinta locations, Texas has by far the most (not entirely sure why that's the case) and Delaware, Hawaii, and DC all have the least (since they all have 0 locations and aren't in this data frame — Maine has 1). 
 
