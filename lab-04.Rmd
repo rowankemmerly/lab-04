@@ -124,7 +124,7 @@ laquinta <- laquinta %>%
 Let's now look at how many Denny's and La Quintas are in each state!
 
 ```{r dn-frequencies}
-dennys %>%
+dn_freq <- dennys %>%
   count(state) %>%
   inner_join(states, by = c("state" = "abbreviation")) %>%
   arrange(desc(n))
@@ -133,11 +133,58 @@ dennys %>%
 
 ```{r lq-frequencies}
 
-laquinta %>%
+lq_freq <- laquinta %>%
   count(state) %>%
   inner_join(states, by = c("state" = "abbreviation")) %>%
   arrange(name)
 ```
 
 So it looks like California has the most Denny's locations (makes sense, since it's such a large state), and Delaware has the least (which also makes sense, since it's such a small state). For La Quinta locations, Texas has by far the most (not entirely sure why that's the case) and Delaware, Hawaii, and DC all have the least (since they all have 0 locations and aren't in this data frame — Maine has 1). 
+
+
+### Exercise 9
+
+First I'm creating a new data frame that has both the Denny's and La Quinta data. 
+
+```{r creating-combined-dataset}
+
+dn <- dennys %>%
+  mutate(establishment = "Denny's")
+lq <- laquinta %>%
+  mutate(establishment = "La Quinta")
+
+dn_lq <- bind_rows(dn, lq)
+
+```
+
+```{r plot-1}
+
+ggplot(dn_lq, aes(x = longitude,
+                  y = latitude,
+                  color = establishment)) +
+  geom_point()
+
+```
+
+Wow, it's the shape of the US! 
+
+I'm going to compute a new variable to determine which states have the most Denny's and La Quinta locations per thousand square miles.
+
+```{r per-1000-miles}
+
+dn_freq %>%
+  mutate(per1000sqmi = (n/area)*1000) %>%
+  arrange(desc(per1000sqmi))
+
+lq_freq %>%
+  mutate(per1000sqmi = (n/area)*1000) %>%
+  arrange(desc(per1000sqmi))
+
+
+```
+
+DC has the most Denny's per 1000 square miles, and Rhode Island has the most La Quintas per square 1000 miles!
+
+
+
 
