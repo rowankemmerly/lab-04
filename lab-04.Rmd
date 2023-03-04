@@ -23,7 +23,7 @@ states <- read_csv("data/states.csv")
 
 ### Exercise 1
 
-```{r dataset-info}
+```{r dataset-info-dennys}
 glimpse(dennys)
 ```
 
@@ -31,7 +31,7 @@ The Denny's dataset has 1643 rows and 6 columns: each row represents a Denny's l
 
 ### Exercise 2
 
-```{r dataset-info}
+```{r dataset-info-laquinta}
 glimpse(laquinta)
 ```
 
@@ -142,7 +142,7 @@ lq_freq <- laquinta %>%
 So it looks like California has the most Denny's locations (makes sense, since it's such a large state), and Delaware has the least (which also makes sense, since it's such a small state). For La Quinta locations, Texas has by far the most (not entirely sure why that's the case) and Delaware, Hawaii, and DC all have the least (since they all have 0 locations and aren't in this data frame — Maine has 1). 
 
 
-### Exercise 9
+### Exercise 10
 
 First I'm creating a new data frame that has both the Denny's and La Quinta data. 
 
@@ -185,6 +185,47 @@ lq_freq %>%
 
 DC has the most Denny's per 1000 square miles, and Rhode Island has the most La Quintas per square 1000 miles!
 
+
+### Exercise 11
+
+Looking at North Carolina Denny's and La Quintas:
+
+```{r plot-nc}
+
+dn_lq_nc <- filter(dn_lq, state == "NC")
+
+nc_plot <- ggplot(dn_lq_nc, aes(x = longitude,
+                  y = latitude,
+                  color = establishment)) +
+  geom_point(alpha = .6) +
+  labs(title = "Denny's and La Quinta Locations in North Carolina", subtitle = "by geographic coordinates")
+
+nc_plot
+
+```
+
+I would say that, for the most part, all but one of the La Quinta locations in NC are quite close to a Denny's. 
+
+
+### Exercise 12
+
+Looking at Texas Denny's and La Quintas:
+
+```{r plot-tx, fig.height=7, fig.width=10}
+
+dn_lq_tx <- filter(dn_lq, state == "TX")
+
+tx_plot <- ggplot(dn_lq_tx, aes(x = longitude,
+                  y = latitude,
+                  color = establishment)) +
+  geom_point(alpha = .5) +
+  labs(title = "Denny's and La Quinta Locations in Texas", subtitle = "by geographic coordinates")
+
+tx_plot
+
+```
+
+Woah, the joke definitely seems to hold for Texas! Almost all of the Denny's locations are very close to a La Quinta (though there are plenty of La Quinta locations that don't have a Denny's nearby).
 
 
 
